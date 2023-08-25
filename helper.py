@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+# spiecher
 items = []
 
 
@@ -8,9 +9,10 @@ class Item:
     text: str
     isCompleted: bool = False
 
-
+# BBB-sierung
 def add(text):
     text = text.replace('b', 'bbb').replace('B', 'Bbb')
+    # index übergabe
     items.append(Item(text))
 
 

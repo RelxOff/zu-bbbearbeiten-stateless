@@ -15,7 +15,6 @@ def add(title):
     # index übergabe
     todos.append(todo(title))
 
-
 def get_all():
     return todos
 
@@ -26,3 +25,6 @@ def get(index):
 
 def update(index):
     todos[index].isCompleted = not todos[index].isCompleted
+
+def delete():
+    todos.remove = todos

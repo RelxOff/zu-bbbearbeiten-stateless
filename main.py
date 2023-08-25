@@ -5,14 +5,14 @@ app = Flask(__name__)
 #urls regieren
 @app.route("/")
 def index():
-    items = helper.get_all()
-    return render_template('index.html', items=items)
+    todos = helper.get_all()
+    return render_template('index.html', todos=todos)
 
 
 @app.route('/add', methods=["POST"])
 def add():
-    text = request.form.get("text")
-    helper.add(text)
+    title = request.form.get("title")
+    helper.add(title)
     return redirect(url_for("index"))
 
 

@@ -1,28 +1,28 @@
 from dataclasses import dataclass
 
 # spiecher
-items = []
+todos = []
 
 
 @dataclass
-class Item:
-    text: str
+class todo:
+    title: str
     isCompleted: bool = False
 
 # BBB-sierung
-def add(text):
-    text = text.replace('b', 'bbb').replace('B', 'Bbb')
+def add(title):
+    title = title.replace('b', 'bbb').replace('B', 'Bbb')
     # index übergabe
-    items.append(Item(text))
+    todos.append(todo(title))
 
 
 def get_all():
-    return items
+    return todos
 
 
 def get(index):
-    return items[index]
+    return todos[index]
 
 
 def update(index):
-    items[index].isCompleted = not items[index].isCompleted
+    todos[index].isCompleted = not todos[index].isCompleted

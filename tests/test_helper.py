@@ -17,12 +17,15 @@ def test_category():
     for todo in todos:
         month = random.randrange(1, 13)
         day = random.randrange(1, 29)
-        helper.add(todos[0], date=f"2023-{month}-{day}", category=todo[1], None)
+        date = f"2023-{month}-{day}"
+        category = todo[1]
+        helper.add(todos[0], date, category, None)
 
     # Then: They ought to have their categories
-    for todo in helper.todos:
+    for todo in helper.get_all():
         categories = [todo[1] for todo in todos]
-        assert item.category in categories
+        assert todo.category in categories
+
 
 def test_add():
     # Given: I want to add a to-do with a date
@@ -32,13 +35,11 @@ def test_add():
 
     # When: I add the item
     helper.add(text, date, None, description)
-    print("title:", helper.todos[-1].title)
-    print("Date:", helper.todos[-1].date)
-    print("Description:", helper.todos[-1].description)
 
     # Then: The most recently added to-do should have a date
     assert isinstance(helper.todos[-1].date, datetime.date)
     assert helper.todos[-1].description == description
+
 
 def test_sort():
     # Given: I have several to-dos with dates
@@ -51,11 +52,11 @@ def test_sort():
 
     # When: I add the items
     for todo in todos:
-        helper.add(todo[0], todo[1], None)
+        helper.add(todo[0], todo[1], None, None)
 
     # Then: They should be sorted by date
-    for i in range(len(helper.items) - 1):
-        assert helper.items[i].date <= helper.items[i + 1].date
+    for i in range(len(helper.todos) - 1):
+        assert helper.todos[i].date <= helper.todos[i + 1].date
 
 
 def test_add():
@@ -64,8 +65,8 @@ def test_add():
     date = "2023-09-02"
 
     # When: I add the item
-    helper.add(text, date)
+    helper.add(text, date, None, None)
 
     # Then: The most recently added to-do should have a date
-    item = helper.items[-1]
+    item = helper.todos[-1]
     assert isinstance(item.date, datetime.date)

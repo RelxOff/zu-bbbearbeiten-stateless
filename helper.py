@@ -1,14 +1,16 @@
 import datetime
-import operator
+from operator import attrgetter
 
-items = []
+todos = []
 
-class Item:
-    text: str
-    date: datetime
-    category: str = None
-    description: str = None
-    isCompleted: bool = False
+
+class todo:
+    def __init__(self, title, date, category=None, description=None, isCompleted=False):
+        self.title = title
+        self.date = date
+        self.category = category
+        self.description = description
+        self.isCompleted = isCompleted
 
 
 def oneWeekFromToday():
@@ -17,26 +19,23 @@ def oneWeekFromToday():
     return today + oneWeek
 
 
-def add(title, date=None, category=None, description=None):
-    title = title.replace("b", "bbb").replace("B", "Bbb")
-    if date is None:
-        date = oneWeekFromToday()
-    else:
-        date = datetime.datetime.strptime(date, "%Y-%m-%d")
+def add(title, date, category=None, description=None):
+    date = datetime.datetime.strptime(date, "%Y-%m-%d")
 
     if category is None:
         category = "default"
-    
-    todos.sort(key=attrgetter("date"))
+
     todos.append(todo(title, date, category, description))
+    todos.sort(key=attrgetter("date"))
+
 
 def get_all():
-    return items
+    return todos
 
 
 def get(index):
-    return items[index]
+    return todos[index]
 
 
 def update(index):
-    items[index].isCompleted = not items[index].isCompleted
+    todos[index].isCompleted = not todos[index].isCompleted

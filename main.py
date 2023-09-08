@@ -14,9 +14,10 @@ def index():
 @app.route("/add", methods=["POST"])
 def add():
     text = request.form.get("text")
-    date = request.form.get("deadline")
+    date = request.form.get("date")
     category = request.form.get("category")
-    helper.add(text, date=date, category=category)
+    description = request.form.get("description")
+    helper.add(title, date=date, category=category, description=description)
     return redirect(url_for("index"))
 
 

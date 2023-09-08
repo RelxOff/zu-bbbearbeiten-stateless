@@ -1,15 +1,13 @@
 import datetime
 import operator
-from dataclasses import dataclass
 
 items = []
 
-
-@dataclass
 class Item:
     text: str
     date: datetime
-    category: str
+    category: str = None
+    description: str = None
     isCompleted: bool = False
 
 
@@ -19,8 +17,8 @@ def oneWeekFromToday():
     return today + oneWeek
 
 
-def add(text, date=None, category=None):
-    text = text.replace("b", "bbb").replace("B", "Bbb")
+def add(title, date=None, category=None, description=None):
+    title = title.replace("b", "bbb").replace("B", "Bbb")
     if date is None:
         date = oneWeekFromToday()
     else:
@@ -28,10 +26,9 @@ def add(text, date=None, category=None):
 
     if category is None:
         category = "default"
-
-    items.append(Item(text, date, category))
-    items.sort(key=lambda x: (x.date, x.category))
-
+    
+    todos.sort(key=attrgetter("date"))
+    todos.append(todo(title, date, category, description))
 
 def get_all():
     return items

@@ -1,39 +1,45 @@
-from dataclasses import dataclass
 import datetime
-from operator import attrgetter
+import operator
+from dataclasses import dataclass
 
-# speicher
-todos = []
+items = []
 
 
 @dataclass
-class todo:
-    title: str
-    date: datetime.date = None
+class Item:
+    text: str
+    date: datetime
+    category: str
     isCompleted: bool = False
 
 
-# test
-# BBB-sierung
-def add(title, date):
-    title = title.replace("b", "bbb").replace("B", "Bbb")
-    date = datetime.datetime.strptime(date, "%Y-%m-%d")
-    todos.sort(key=attrgetter("date"))
-    # index übergabe
-    todos.append(todo(title, date))
+def oneWeekFromToday():
+    today = datetime.datetime.now()
+    oneWeek = datetime.timedelta(weeks=1)
+    return today + oneWeek
+
+
+def add(text, date=None, category=None):
+    text = text.replace("b", "bbb").replace("B", "Bbb")
+    if date is None:
+        date = oneWeekFromToday()
+    else:
+        date = datetime.datetime.strptime(date, "%Y-%m-%d")
+
+    if category is None:
+        category = "default"
+
+    items.append(Item(text, date, category))
+    items.sort(key=lambda x: (x.date, x.category))
 
 
 def get_all():
-    return todos
+    return items
 
 
 def get(index):
-    return todos[index]
+    return items[index]
 
 
 def update(index):
-    todos[index].isCompleted = not todos[index].isCompleted
-
-
-def delete():
-    todos.remove = todos
+    items[index].isCompleted = not items[index].isCompleted

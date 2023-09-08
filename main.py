@@ -1,21 +1,22 @@
+from flask import Flask, Response, redirect, render_template, request, url_for
+
 import helper
-from flask import Flask, request, Response, render_template, redirect, url_for
 
 app = Flask(__name__)
 
 
-# urls regieren
 @app.route("/")
 def index():
-    todos = helper.get_all()
-    return render_template("index.html", todos=todos)
+    items = helper.get_all()
+    return render_template("index.html", items=items)
 
 
 @app.route("/add", methods=["POST"])
 def add():
-    title = request.form.get("title")
-    date = request.form.get("date")
-    helper.add(title, date)
+    text = request.form.get("text")
+    date = request.form.get("deadline")
+    category = request.form.get("category")
+    helper.add(text, date=date, category=category)
     return redirect(url_for("index"))
 
 

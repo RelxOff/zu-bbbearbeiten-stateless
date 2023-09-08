@@ -7,14 +7,17 @@ def test_add():
     # Given: I want to add a to-do with a date
     text = "Lorem ipsum"
     date = "2023-09-02"
+    description = "Lorem ipsum hi hi ha ha"
 
     # When: I add the item
-    helper.add(text, date)
+    helper.add(text, date, description)
     print("title:", helper.todos[-1].title)
     print("Date:", helper.todos[-1].date)
+    print("Description:", helper.todos[-1].description)
 
     # Then: The most recently added to-do should have a date
     assert isinstance(helper.todos[-1].date, datetime.date)
+    assert helper.todos[-1].description == description
 
 
 def test_sort():
@@ -28,7 +31,7 @@ def test_sort():
 
     # When: I add the items
     for todo in todos:
-        helper.add(todo[0], todo[1])
+        helper.add(todo[0], todo[1], None)
 
     # Then: They should be sorted by date
     for i in range(len(helper.todos) - 1):

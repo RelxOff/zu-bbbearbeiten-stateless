@@ -16,12 +16,15 @@ def test_add():
     # Then: The most recently added to-do should have a date
     assert isinstance(helper.todos[-1].date, datetime.date)
 
+
 def test_sort():
     # Given: I have several to-dos with dates
-    todos = [("Universum debuggen", "2023-09-06"),
-            ("Sinn des Lebens entdecken", "2023-09-01"),
-            ("Superheld werden", "2023-10-25"),
-            ("Netto null", "2050-01-01")]
+    todos = [
+        ("Universum debuggen", "2023-09-06"),
+        ("Sinn des Lebens entdecken", "2023-09-01"),
+        ("Superheld werden", "2023-10-25"),
+        ("Netto null", "2050-01-01"),
+    ]
 
     # When: I add the items
     for todo in todos:
@@ -29,4 +32,4 @@ def test_sort():
 
     # Then: They should be sorted by date
     for i in range(len(helper.todos) - 1):
-        assert helper.todos[i].date < helper.todos[i+1].date
+        assert helper.todos[i].date < helper.todos[i + 1].date

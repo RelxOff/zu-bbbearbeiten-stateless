@@ -12,13 +12,16 @@ class todo:
     date: datetime.date = None
     isCompleted: bool = False
 
+
+# test
 # BBB-sierung
 def add(title, date):
-    title = title.replace('b', 'bbb').replace('B', 'Bbb')
-    date = datetime.datetime.strptime(date, '%Y-%m-%d')
-    todos.sort(key=attrgetter('date'))
+    title = title.replace("b", "bbb").replace("B", "Bbb")
+    date = datetime.datetime.strptime(date, "%Y-%m-%d")
+    todos.sort(key=attrgetter("date"))
     # index übergabe
     todos.append(todo(title, date))
+
 
 def get_all():
     return todos
@@ -30,6 +33,7 @@ def get(index):
 
 def update(index):
     todos[index].isCompleted = not todos[index].isCompleted
+
 
 def delete():
     todos.remove = todos

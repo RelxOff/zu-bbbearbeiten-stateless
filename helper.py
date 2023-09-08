@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import datetime
+from operator import attrgetter
 
 # speicher
 todos = []
@@ -15,6 +16,7 @@ class todo:
 def add(title, date):
     title = title.replace('b', 'bbb').replace('B', 'Bbb')
     date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    todos.sort(key=attrgetter('date'))
     # index übergabe
     todos.append(todo(title, date))
 

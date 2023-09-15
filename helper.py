@@ -1,16 +1,36 @@
 import datetime
-from operator import attrgetter
+import operator
+from dataclasses import dataclass
+import io
+import csv
 
-todos = []
+items = []
 
 
-class todo:
-    def __init__(self, title, date, category=None, description=None, isCompleted=False):
-        self.title = title
-        self.date = date
-        self.category = category
-        self.description = description
-        self.isCompleted = isCompleted
+@dataclass
+class Item:
+    text: str
+    date: datetime
+    category: str
+    description: str
+    isCompleted: bool = False
+
+
+def get_csv():
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["Titel", "Datum", "Kategorie", "Beschreibung", "Erledigt?"])
+    for item in items:
+        writer.writerow(
+            [
+                item.text,
+                item.date.strftime("%d.%m.%Y"),
+                item.category,
+                item.description,
+                "x" if item.isCompleted else "o",
+            ]
+        )
+    return output.getvalue()
 
 
 def oneWeekFromToday():
@@ -19,23 +39,29 @@ def oneWeekFromToday():
     return today + oneWeek
 
 
-def add(title, date, category=None, description=None):
-    date = datetime.datetime.strptime(date, "%Y-%m-%d")
+def add(text, date=None, category=None, description=None):
+    text = text.replace("b", "bbb").replace("B", "Bbb")
+    if date is None:
+        date = oneWeekFromToday()
+    else:
+        date = datetime.datetime.strptime(date, "%Y-%m-%d")
 
     if category is None:
         category = "default"
 
-    todos.append(todo(title, date, category, description))
-    todos.sort(key=attrgetter("date"))
+    if description is None:
+        description = ""
+    items.append(Item(text, date, category, description))
+    items.sort(key=lambda x: (x.date, x.category))
 
 
 def get_all():
-    return todos
+    return items
 
 
 def get(index):
-    return todos[index]
+    return items[index]
 
 
 def update(index):
-    todos[index].isCompleted = not todos[index].isCompleted
+    items[index].isCompleted = not items[index].isCompleted

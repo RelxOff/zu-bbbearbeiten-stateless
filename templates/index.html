@@ -16,18 +16,6 @@
         <div class="ui divider" />
     </div>
 
-        <form name="item" class="ui form" action="/add" method="post">
-            <div class="field" style="margin-top: 10px;">
-                <div for="text" class="ui pointing below label">Was gibbbt es zu tun?</div>
-                <div class="ui action input">
-                    <input autofocus name="text" type="text" name="text" placeholder="Fürs Modul lernen...">
-                    <textarea name="description" id="description" cols="30" rows="10" type="text"></textarea>
-                    <button class="ui blue button" type="submit">Hinzufügen</button>
-                </div>
-            </div>
-
-        </form>
-
     <form name="item" class="ui container form" action="/add" method="post">
         <div for="text" class="ui pointing below label" style="margin-top: 0.5em">Was gibbbt es zu tun?</div>
         <input autofocus class="ui fluid input focus" name="text" type="text" id="text"
@@ -50,11 +38,18 @@
             <button class="ui blue button" type="submit">Hinzufügen</button>
         </div>
     </form>
+
+    <div class="ui container" style="margin-top: 2em">
+        <h1 class="ui center aligned header">Zu Bbbearbeiten</h1>
+        <div class="ui divider" />
         {% for item in items %}
         <div class="ui raised segment" style="overflow:hidden; margin-top: 1em">
             <span class="ui black left label"><i class="calendar icon"></i>{{item.date.strftime("%d.%m.%Y")}}</span>
             <span class="ui black left label"><i class="folder open icon"></i>{{item.category}}</span>
             <span class="ui header" style="margin-left: 0.5em;">{{item.text}}</span>
+            <span class>{{item.description}}</span>
+
+            {% if item.isCompleted %}
             <a class="ui green left corner label" href="/update/{{loop.index0}}"><i
                     class="check square outline icon"></i></a>
             {% else %}
@@ -63,18 +58,21 @@
             {% endif %}
         </div>
         {% endfor %}
-    </div>
+
+        <a href="/getCSV"><button class="ui fluid primary button"><i class="icon download"></i>Download</button></a>
     </div>
 
+
+
+    </div>
     <script type="text/javascript">
 
         $(document).ready(function () {
 
-            document.todo.title.focus();
+            document.item.text.focus();
 
         });
 
     </script>
-
 
 </html>

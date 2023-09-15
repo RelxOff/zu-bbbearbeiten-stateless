@@ -5,10 +5,7 @@ name: Python package
 
 on:
   pull_request:
-    types:
-      - opened
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   test:
